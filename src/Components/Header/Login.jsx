@@ -2,6 +2,8 @@ import { useRef, useState } from 'react'
 import Header from './Header'
 import image from '../../assets/image.png'
 import Validation from '../Validation'
+import {  createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../utils/FireBase';
 
 const Login = () => {
   const[isSingIn,setIsSignIn] = useState(false)
@@ -14,6 +16,35 @@ const Login = () => {
   const submitHandler = () => {
     const message = Validation(name.current.value,email.current.value, password.current.value);
     setErrorMessage(message);
+    if(message) return
+
+    if(!isSingIn)
+    createUserWithEmailAndPassword
+       (auth,
+        email.current.value, 
+        password.current.value)
+    .then((userCredential) => {
+      // Signed up 
+      const user = userCredential.user;
+      console.log(user)
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+        setErrorMessage(errorCode,errorMessage)
+    });
+   else { 
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+        console.log(user)
+    })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+          setErrorMessage(errorCode,errorMessage)
+      });
+    }
   }
 
   const toggle = () => {

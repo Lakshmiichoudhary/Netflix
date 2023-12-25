@@ -7,6 +7,8 @@ const Validation = (name, email, password) => {
     if(!emailValid) return "Enter a valid email";
     if(!passwordValid) return "Enter a valid password";
     if(!namevalid) return "Enter a valid name";
+
+    return null;
 }
 
 export default Validation
