@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from './Header/Header'
-import usePlayMovie from './hooks/useHooks'
+import usePlayMovie from './hooks/useMovieHooks'
 import TailerVideo from './TailerVideo';
 import SecondConainer from './SecondConainer';
 
