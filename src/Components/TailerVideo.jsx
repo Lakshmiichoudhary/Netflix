@@ -4,17 +4,18 @@ import VideoBackground from './VideoBackground'
 import VideoTitle from './VideoTitle'
 
 const TailerVideo = () => {
-    const movies = useSelector((store) => store.movie?.playNowMovie) 
-    if(!movies) return
+  const movies = useSelector((store) => store.movies?.nowPlayingMovies);
 
-    const mainMovie = movies[0]
-        console.log(mainMovie)
+  if (!movies) return;
+
+  const mainMovie = movies[0];
+
+  const { original_name, overview, id } = mainMovie;
     
-    const {original_title,overview,id} = mainMovie    
   return (
     <div>
-        <VideoTitle title={original_title} overview={overview} />
-        <VideoBackground movieID={id} />
+        <VideoTitle title={original_name} overview={overview} />
+        <VideoBackground movieId={id} />
     </div>
   )
 }

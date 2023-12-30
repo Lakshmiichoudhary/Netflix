@@ -1,12 +1,20 @@
 import React from 'react'
 import Header from './Header/Header'
-import usePlayMovie from './hooks/useMovieHooks'
 import TailerVideo from './TailerVideo';
-import SecondConainer from './SecondConainer';
+import SecondConainer from './Movies/SecondConainer';
+import usePopularMovie from './hooks/usePopularMovie';
+import useTopRated from './hooks/useTopRatedMovie';
+import usePlayNowMovies from './hooks/usePlayNow';
+import useUpComingMovies from './hooks/useUpComingMovies';
+
 
 const Browse = () => {
 
-  usePlayMovie();
+  usePopularMovie();
+  useUpComingMovies();
+  usePlayNowMovies();
+  useTopRated();
+  
   return (
     <div>
       <Header />

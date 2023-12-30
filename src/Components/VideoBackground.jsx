@@ -7,11 +7,9 @@ const VideoBackground = () => {
   const getVideoBackground = async () => {
     const data = await fetch('https://api.themoviedb.org/3/movie/695721/videos?language=en-US', options)
     const json = await data.json();
-    console.log(json)
 
     const filterTrailer = json.results.filter(video => video.type === "Trailer")
     const trailer = filterTrailer.length ? filterTrailer[0] : json.results[0];
-    console.log(trailer)
     setTrailerId(trailer.key)
   }
 

@@ -7,14 +7,14 @@ import { auth } from '../../utils/FireBase';
 import { Validation } from '../Validation';
 
 const Login = () => {
-  const[isSingIn,setIsSignIn] = useState(false)
+  const[isSingIn,setIsSignIn] = useState(true)
   const [errorMessage,setErrorMessage] = useState(null)
  
+  const name = useRef(null);
   const email = useRef(null)
   const password = useRef(null)
 
   const submitHandler = () => {
-    
     const message = Validation(email.current.value, password.current.value);
     setErrorMessage(message);
     if(message) return
@@ -26,6 +26,22 @@ const Login = () => {
         password.current.value)
     .then((userCredential) => {
       const user = userCredential.user;
+      updateProfile(user, {
+        displayName: name.current.value,
+      })
+      .then(() => {
+        const { uid, email, displayName } = auth.currentUser;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+          })
+        );
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
       console.log(user)
     })
     .catch((error) => {
@@ -62,7 +78,7 @@ const Login = () => {
         <h1 className='font-bold text-3xl p-4'>{isSingIn ? "Sign In" : "Sign Up"}</h1>
         <form onSubmit={(e) => e.preventDefault()}>
           {!isSingIn && 
-          <input type='text' placeholder='Full Name' className='p-4 m-2 w-full bg-gray-700 rounded-md'/>}
+          <input ref={name} type='text' placeholder='Full Name' className='p-4 m-2 w-full bg-gray-700 rounded-md'/>}
           <input ref={email} type='text' placeholder='Email or phone Number' className='p-4 m-2 w-full bg-gray-700 rounded-md'/>
           <input ref={password} type='password' placeholder='Password' className='p-4 m-2 w-full bg-gray-700 rounded-md'/>
           <p className='p-2 text-red-700 font-bold'>{errorMessage}</p>
