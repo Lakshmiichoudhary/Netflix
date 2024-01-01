@@ -6,9 +6,11 @@ import usePopularMovie from './hooks/usePopularMovie';
 import useTopRated from './hooks/useTopRatedMovie';
 import usePlayNowMovies from './hooks/usePlayNow';
 import useUpComingMovies from './hooks/useUpComingMovies';
-
+import ExplorePage from './ExplorePage/ExplorePage';
+import { useSelector } from 'react-redux';
 
 const Browse = () => {
+  const exploreSearch = useSelector(store => store.explore.explorePage)
 
   usePopularMovie();
   useUpComingMovies();
@@ -18,8 +20,13 @@ const Browse = () => {
   return (
     <div>
       <Header />
-      <TailerVideo />
-      <SecondConainer />
+      {exploreSearch ? (
+        <ExplorePage /> ) :( 
+        <>
+          <TailerVideo />
+          <SecondConainer /> 
+        </>  
+      )}
     </div>
   )
 }
